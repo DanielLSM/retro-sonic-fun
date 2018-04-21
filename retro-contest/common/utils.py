@@ -1,3 +1,3 @@
 #normalize pixel values
-def adjust_obs(obs):
+def normalize_obs(obs):
     return obs.astype('float32') / 255.
