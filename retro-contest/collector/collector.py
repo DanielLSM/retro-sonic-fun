@@ -2,6 +2,7 @@ import numpy as np
 from common.utils import normalize_obs
 import multiprocessing
 import retro
+import datetime
 
 def main(args):
     process = multiprocessing.current_process().name
@@ -20,13 +21,11 @@ def main(args):
                 dones.append(done)
                 if done:
                     obs = env.reset()
-
         np.save('./data/{}/{}/{}_batch_{}/states'.format(args.game, args.now, process, batch), states)
         np.save('./data/{}/{}/{}_batch_{}/actions'.format(args.game, args.now, process, batch), actions)
         np.save('./data/{}/{}/{}_batch_{}/rewards'.format(args.game, args.now, process, batch), rewards)
         np.save('./data/{}/{}/{}_batch_{}/dones'.format(args.game, args.now, process, batch), dones)
         print("batch {} from {} done".format(batch, process))
-        
 
 
 if __name__ == '__main__':
@@ -41,6 +40,6 @@ if __name__ == '__main__':
     now = datetime.datetime.now()
     args.now = now.strftime("%Y-%m-%d %H:%M")
     p = multiprocessing.Pool(process=args.num_cpus)
-    for in range(args.num_cpus):
+    for _ in range(int(args.num_cpus)):
         p.apply_async(main, args=args)
     # main(args)
