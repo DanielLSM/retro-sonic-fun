@@ -1,0 +1,57 @@
+{
+    "input_dim": [
+        64,
+        64,
+        3
+    ],
+    "conv_filters": [
+        32,
+        64,
+        64,
+        128
+    ],
+    "conv_kernel_sizes": [
+        4,
+        4,
+        4,
+        4
+    ],
+    "conv_strides": [
+        2,
+        2,
+        2,
+        2
+    ],
+    "conv_activations": [
+        "relu",
+        "relu",
+        "relu",
+        "relu"
+    ],
+    "dense_size": 1024,
+    "conv_t_kernel_sizes": [
+        64,
+        64,
+        32,
+        3
+    ],
+    "conv_t_filters": [
+        5,
+        5,
+        6,
+        6
+    ],
+    "conv_t_strides": [
+        2,
+        2,
+        2,
+        2
+    ],
+    "conv_t_activations": [
+        "relu",
+        "relu",
+        "relu",
+        "sigmoid"
+    ],
+    "z_dim": 1024
+}
