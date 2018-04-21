@@ -25,13 +25,14 @@ def generate_data(args):
                 if done:
                     obs = env.reset()
         for name, arr_to_save in zip(names, arr):
-            file_to_save = './data/{}/{}/{}_batch_{}/{}'.format(args.game,
+            file_to_save = './data/{}/{}/{}_batch_{}'.format(args.game,
                                                                 args.now,
                                                                 process,
-                                                                batch,
-                                                                name)
+                                                                batch)
             os.makedirs(os.path.dirname(file_to_save), exist_ok=True)
-            np.save(file_to_save, arr, fix_imports=False)
+            # https://docs.scipy.org/doc/numpy-1.14.0/reference/generated/numpy.savez_compressed.html
+            np.savez_compressed(file_to_save, states=arr[0], actions=arr[1],
+                                rewards=arr[2], dones=arr[3])
         print("batch {} from {} done".format(batch, process))
 
 
