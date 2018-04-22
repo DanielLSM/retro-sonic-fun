@@ -19,7 +19,7 @@ TOTAL_TIMESTEPS = int(1e6)
 
 def main():
     """Run JERK on the attached environment."""
-    env = make(game='SonicTheHedgehog-Genesis', state='MarbleZone.Act1')
+    env = make(game='SonicTheHedgehog-Genesis', state='SpringYardZone.Act2')
     new_ep = True
     solutions = []
     while True:

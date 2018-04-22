@@ -1,2 +1,3 @@
 retro-contest/collector/data
 .vscode
+__pycache__
