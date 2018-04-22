@@ -1,3 +1,5 @@
 retro-contest/collector/data
 .vscode
 __pycache__
+*.npz
+*.npy
