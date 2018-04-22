@@ -1,11 +1,12 @@
-import retro
+from retro_contest.local import make
 
 
 def main():
-    env = retro.make(game='Airstriker-Genesis', state='Level1')
+    env = make(game='SonicTheHedgehog-Genesis', state='MarbleZone.Act1')
     obs = env.reset()
     while True:
         obs, rew, done, info = env.step(env.action_space.sample())
+        # obs, rew, done, info = env.step(env.action_space.sample())
         env.render()
         if done:
             obs = env.reset()

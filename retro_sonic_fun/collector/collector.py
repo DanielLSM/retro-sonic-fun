@@ -45,14 +45,19 @@ if __name__ == '__main__':
     parser.add_argument(
         '--game',
         type=str,
-        default='Airstriker-Genesis',
+        default='SonicTheHedgehog-Genesis',
         help='total number of batches')
     parser.add_argument(
-        '--total_batchs', type=int, default=200, help='total number of batches')
+        '--total_batchs',
+        '-tb',
+        type=int,
+        default=1,
+        help='total number of batches')
     parser.add_argument(
         '--episodes_per_batch',
+        '-eb',
         type=int,
-        default=20,
+        default=1,
         help='total number of episodes per batch')
     parser.add_argument(
         '--num_cpus', type=int, default=1, help='total number of cpus')
