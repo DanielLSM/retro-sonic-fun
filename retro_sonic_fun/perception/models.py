@@ -107,6 +107,46 @@ class VAE(metaclass=NN):
         return self._name
 
 
+def get_mixture_coef(y_pred):
+
+    d = GAUSSIAN_MIXTURES * Z_DIM
+
+    rollout_length = K.shape(y_pred)[1]
+
+    pi = y_pred[:, :, :d]
+    mu = y_pred[:, :, d:(2 * d)]
+    log_sigma = y_pred[:, :, (2 * d):(3 * d)]
+    #discrete = y_pred[:,3*GAUSSIAN_MIXTURES:]
+
+    pi = K.reshape(pi, [-1, rollout_length, GAUSSIAN_MIXTURES, Z_DIM])
+    mu = K.reshape(mu, [-1, rollout_length, GAUSSIAN_MIXTURES, Z_DIM])
+    log_sigma = K.reshape(log_sigma,
+                          [-1, rollout_length, GAUSSIAN_MIXTURES, Z_DIM])
+
+    pi = K.exp(pi) / K.sum(K.exp(pi), axis=2, keepdims=True)
+    sigma = K.exp(log_sigma)
+
+    return pi, mu, sigma  #, discrete
+
+
+def tf_normal(y_true, mu, sigma, pi):
+
+    rollout_length = K.shape(y_true)[1]
+    y_true = K.tile(y_true, (1, 1, GAUSSIAN_MIXTURES))
+    y_true = K.reshape(y_true, [-1, rollout_length, GAUSSIAN_MIXTURES, Z_DIM])
+
+    oneDivSqrtTwoPI = 1 / math.sqrt(2 * math.pi)
+    result = y_true - mu
+    #   result = K.permute_dimensions(result, [2,1,0])
+    result = result * (1 / (sigma + 1e-8))
+    result = -K.square(result) / 2
+    result = K.exp(result) * (1 / (sigma + 1e-8)) * oneDivSqrtTwoPI
+    result = result * pi
+    result = K.sum(result, axis=2)  #### sum over gaussians
+    #result = K.prod(result, axis=2) #### multiply over latent dims
+    return result
+
+
 if __name__ == '__main__':
 
     from retro_sonic_fun.common.utils import create_json_params,\

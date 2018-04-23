@@ -60,13 +60,14 @@ class SonicDiscretizer(gym.ActionWrapper):
         ]
         actions = [['LEFT'], ['RIGHT'], ['LEFT', 'DOWN'], ['RIGHT', 'DOWN'],
                    ['DOWN'], ['DOWN', 'B'], ['B'], ['RIGHT', 'B'],\
-                   ['LEFT', 'B']]
+                   ['LEFT', 'B'], ['NULL']]
         self._actions = []
-        for action in actions:
+        for action in actions[:-1]:
             arr = np.array([False] * 12)
             for button in action:
                 arr[buttons.index(button)] = True
             self._actions.append(arr)
+        self._actions.append(np.array([False] * 12))
         self.action_space = gym.spaces.Discrete(len(self._actions))
 
     def action(self, a):  # pylint: disable=W0221
