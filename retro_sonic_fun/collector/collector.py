@@ -11,6 +11,8 @@ from retro_sonic_fun.controller.models import RandomModel
 def get_model(alg, env):
     if alg == 'random':
         return RandomModel(env)
+    elif alg =='jerk';
+        return JerkModel(env)
     else:
         raise NotImplementedError
 

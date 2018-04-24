@@ -13,6 +13,7 @@ ACTIONS = [
     ['LEFT', 'B']  #8
 ]
 
+
 class Model(object):
     def __init__(self):
         pass
@@ -20,7 +21,18 @@ class Model(object):
     def get_action(self, obs):
         raise NotImplementedError
 
+
 class RandomModel(Model):
+    def __init__(self, env, seed=42):
+        self._action_controller = SonicDiscretizer(env)
+        np.random.seed(seed)
+
+    def get_action(self, obs):
+        ac = np.random.randint(len(ACTIONS))
+        return self._action_controller.action(ac)
+
+
+class JerkModel(Model):
     def __init__(self, env, seed=42):
         self._action_controller = SonicDiscretizer(env)
         np.random.seed(seed)
